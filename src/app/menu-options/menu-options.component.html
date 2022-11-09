@@ -1,0 +1,28 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Menu</span>
+  </mat-toolbar-row>
+  <mat-toolbar-row>
+    <mat-icon [matBadge]="orderService.getTotalAmount()" matBadgeColor="accent"
+      >shopping_cart</mat-icon
+    >
+    <span style="flex: 1"></span>
+    <a mat-button routerLink="/order">GO TO CHECKOUT</a>
+    <span style="flex: 1"></span>
+    <span>{{ orderService.getFinalPrice() | currency: "BRL" }}</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-action-list>
+  <ng-container *ngFor="let product of products; let i = index">
+    <ng-container
+      *ngIf="i === 0 || product.categoria !== products[i - 1].categoria"
+    >
+      <h2 mat-subheader>{{ product.categoria }}</h2>
+    </ng-container>
+    <mat-list-item (click)="orderService.addProduct(product)">
+      <span style="flex: 1">{{ product.descricao }}</span>
+      <span>{{ product.preco | currency: "BRL" }}</span>
+    </mat-list-item>
+  </ng-container>
+</mat-action-list>
